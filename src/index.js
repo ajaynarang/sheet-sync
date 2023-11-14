@@ -1,7 +1,6 @@
 const fs = require("fs");
-const xlsx = require("xlsx");
 const chalk = require("chalk");
-const XLSXStyle = require('xlsx-style');
+const XLSXStyle = require("xlsx-style");
 
 function syncSheet(
   baseSheetPath,
@@ -18,7 +17,7 @@ function syncSheet(
     // Load source sheet
     const sourceWorkbook = XLSXStyle.readFile(sourceSheetPath);
 
-    // const newWorkbook = xlsx.utils.book_new();
+    // const newWorkbook = XLSXStyle.utils.book_new();
     const newWorkbook = { ...baseWorkbook };
 
     for (
@@ -34,13 +33,12 @@ function syncSheet(
       // Clone base sheet to create new sheet
       const newSheet = newWorkbook.Sheets[newWorkbook.SheetNames[sheetIndex]];
 
-
       if (sourceSheet && newSheet) {
         //for each provided columns
         columnNames.forEach((column) => {
           for (
             let row = 1;
-            row <= xlsx.utils.decode_range(newSheet["!ref"]).e.r + 1;
+            row <= XLSXStyle.utils.decode_range(newSheet["!ref"]).e.r + 1;
             row++
           ) {
             const cellRef = column + row;
@@ -52,13 +50,13 @@ function syncSheet(
               newSheet[cellRef] = cellValue;
             }
           }
-          //xlsx.utils.book_append_sheet(newWorkbook, newSheet);
+          //XLSXStyle.utils.book_append_sheet(newWorkbook, newSheet);
         });
       }
     }
 
-    //console.log("newWorkbook", newWorkbook.Sheets["Sheet 1"]["A6"]);
-    xlsx.writeFile(newWorkbook, `${newSheetName}`);
+    console.log("newWorkbook", newWorkbook.Sheets["Sheet 1"]["A5"]);
+    XLSXStyle.writeFile(newWorkbook, `${newSheetName}`);
 
     console.log("New sheet generated successfully.");
   } catch (error) {
