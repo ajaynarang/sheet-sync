@@ -1,6 +1,7 @@
 const fs = require("fs");
 const xlsx = require("xlsx");
 const chalk = require("chalk");
+const XLSXStyle = require('xlsx-style');
 
 function syncSheet(
   baseSheetPath,
@@ -11,11 +12,11 @@ function syncSheet(
 ) {
   try {
     // Load base sheet
-    const baseWorkbook = xlsx.readFile(baseSheetPath, {
+    const baseWorkbook = XLSXStyle.readFile(baseSheetPath, {
       cellStyles: true,
     });
     // Load source sheet
-    const sourceWorkbook = xlsx.readFile(sourceSheetPath);
+    const sourceWorkbook = XLSXStyle.readFile(sourceSheetPath);
 
     // const newWorkbook = xlsx.utils.book_new();
     const newWorkbook = { ...baseWorkbook };
@@ -33,7 +34,6 @@ function syncSheet(
       // Clone base sheet to create new sheet
       const newSheet = newWorkbook.Sheets[newWorkbook.SheetNames[sheetIndex]];
 
-      console.log("sourceSheet", sourceSheet);
 
       if (sourceSheet && newSheet) {
         //for each provided columns
@@ -57,7 +57,7 @@ function syncSheet(
       }
     }
 
-    console.log("newWorkbook", newWorkbook.Sheets["Sheet 1"]["A6"]);
+    //console.log("newWorkbook", newWorkbook.Sheets["Sheet 1"]["A6"]);
     xlsx.writeFile(newWorkbook, `${newSheetName}`);
 
     console.log("New sheet generated successfully.");

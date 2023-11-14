@@ -11,6 +11,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "nodeman": "^1.1.2",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "xlsx-style": "^0.8.13"
   }
 }
